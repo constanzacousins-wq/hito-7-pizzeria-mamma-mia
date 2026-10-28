@@ -1,6 +1,9 @@
 
-import { Routes, Route } from "react-router-dom";
+import { useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
 import CartProvider from "./context/CartContext";
+import UserProvider, { UserContext } from "./context/UserContext";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -15,24 +18,53 @@ import NotFound from "./pages/NotFound";
 
 import "./App.css";
 
-function App() {
+// Componente que controla las rutas
+const AppContent = () => {
+  const { token } = useContext(UserContext);
+
   return (
-    <CartProvider>
+    <>
       <Navbar />
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+
+        <Route
+          path="/register"
+          element={token ? <Navigate to="/" replace /> : <Register />}
+        />
+
+        <Route
+          path="/login"
+          element={token ? <Navigate to="/" replace /> : <Login />}
+        />
+
         <Route path="/cart" element={<Cart />} />
-        <Route path="/pizza/p001" element={<Pizza />} />
-        <Route path="/profile" element={<Profile />} />
+
+        <Route path="/pizza/:id" element={<Pizza />} />
+
+        <Route
+          path="/profile"
+          element={token ? <Profile /> : <Navigate to="/login" replace />}
+        />
+
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Footer />
-    </CartProvider>
+    </>
+  );
+};
+
+// Proveedores de Context API
+function App() {
+  return (
+    <UserProvider>
+      <CartProvider>
+        <AppContent />
+      </CartProvider>
+    </UserProvider>
   );
 }
 

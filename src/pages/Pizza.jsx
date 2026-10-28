@@ -1,15 +1,26 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { pizzas as pizzasLocales } from "../pizzas";
+import { CartContext } from "../context/CartContext";
 
 const Pizza = () => {
+  const { id } = useParams();
+
   const [pizza, setPizza] = useState(null);
   const [error, setError] = useState(false);
 
+  const { addToCart } = useContext(CartContext);
+
   useEffect(() => {
     const obtenerPizza = async () => {
+      setPizza(null);
+      setError(false);
+
       try {
-        const respuesta = await fetch("https://hito-4-pizzeria-api.onrender.com/api/pizzas/p001");
+        const respuesta = await fetch(
+          `https://hito-4-pizzeria-api.onrender.com/api/pizzas/${id}`
+        );
 
         if (!respuesta.ok) {
           throw new Error("Error al cargar la pizza");
@@ -32,7 +43,7 @@ const Pizza = () => {
     };
 
     obtenerPizza();
-  }, []);
+  }, [id]);
 
   if (error) {
     return <p className="pizza-mensaje">No se pudo cargar la pizza.</p>;
@@ -63,9 +74,15 @@ const Pizza = () => {
           </ul>
 
           <div className="pizza-detail-bottom">
-            <h3>Precio: ${pizza.price.toLocaleString("es-CL")}</h3>
+            <h3>
+              Precio: ${pizza.price.toLocaleString("es-CL")}
+            </h3>
 
-            <button type="button" className="pizza-detail-button">
+            <button
+              type="button"
+              className="pizza-detail-button"
+              onClick={() => addToCart(pizza)}
+            >
               Añadir al carrito 🛒
             </button>
           </div>
