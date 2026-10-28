@@ -1,19 +1,20 @@
-# Pizzería Mamma Mía - Hito 6
+# Pizzería Mamma Mía - Hito 7
 
 Proyecto desarrollado con **React y Vite** para el Bootcamp Full Stack JavaScript de Desafío Latam.
 
 ## Descripción
 
-En este hito se implementa **Context API** para manejar el carrito de compras y compartir su estado entre los componentes de la aplicación.
+En este hito se implementa **React Router II**, utilizando rutas dinámicas, Context API y rutas protegidas para controlar el acceso de los usuarios.
 
 ## Funcionalidades
 
 - Visualización de pizzas desde una API.
-- Agregar pizzas al carrito desde Home.
-- Aumentar y disminuir cantidades.
-- Eliminar productos del carrito.
-- Calcular el total de la compra.
-- Mostrar el total actualizado en Navbar y Cart.
+- Consulta de detalles de cada pizza mediante `useParams`.
+- Carrito de compras con Context API.
+- Simulación de sesión mediante `UserContext`.
+- Cierre de sesión con Logout.
+- Habilitación del botón Pagar según el token.
+- Protección de las rutas Profile, Login y Register.
 
 ## Tecnologías
 
@@ -33,10 +34,7 @@ npm run dev
 
 ## Demo
 
-Puedes ver la aplicación funcionando aquí:
-
-https://constanzacousins-wq.github.io/hito-6-pizzeria-mamma-mia/
-
+https://constanzacousins-wq.github.io/hito-7-pizzeria-mamma-mia/
 
 ## Autoría
 
